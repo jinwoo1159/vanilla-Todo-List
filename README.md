@@ -1,17 +1,23 @@
 ![[첫 프로젝트.gif]]
 
 # 목적
+
 - 지금까지 배운 내용을 잊지 않기 위해, JavaScript를 이용하여 Todo-List를 만들어 보려고 합니다.
 - git을 직접 사용하면서 익숙하게 사용하고 싶습니다.
 - 클론 코딩처럼 강사님의 코드를 따라서 진행하면 완성할 수 있지만, 제 목표는 프로젝트를 진행하는 도중 에러를 만나서 직접 해결하고, 새로운 기능을 추가하고, 모르는 것이 있다면 공부하거나 구글에서 검색하여 문제를 해결하고 싶어서 진행하게 되었습니다.
+
 # 구현 내용
+
 - 생성
 - 삭제
 - 수정 - prompt가 아닌 인풋을 생성해서 수정할 수 있어야 합니다.
 - 완료 표시를 할 수 있어야 합니다.
 - localStorage를 사용해서 브라우저가 다시 열려도 저장된 투두리스트가 보일것
+
 ## 기본 HTML, CSS 구조
+
 ## HTML
+
 ```html
 <div class="container">
   <div class="todo_header">
@@ -26,7 +32,9 @@
   <ul id="todo_ul"></ul>
 </div>
 ```
+
 ## CSS
+
 ```css
 * {
   margin: 0;
@@ -119,7 +127,9 @@ li div {
   outline: none;
 }
 ```
+
 ## JS 전체 코드
+
 ```jsx
 const todoInput = document.getElementById("todo_input");
 const todoUl = document.getElementById("todo_ul");
@@ -292,9 +302,10 @@ function gettodo() {
 
 gettodo();
 // 'gettodo' 함수를 호출하여 실행합니다.
-
 ```
+
 ## 기능 구현 - 생성 부분
+
 ```jsx
 function CreateToDo() {
   if (todoInput.value === "") {
@@ -334,8 +345,11 @@ function paintToDo(todoobj) {
   todoUl.appendChild(li);
 }
 ```
-- 일단 `CreateToDo()`를 보면 인풋창에 내용을 작성하지 않은 경우 알림창이 나오게 했습니다. 그리고 내용을 작성했다면 아래코드가 진행됩니다. 입력값을 `newText`에 할당, `todoobj`는 `id`와 `text`라는 `key`를 가지는 객체입니다. 이 키와 값 구조는 로컬 스토리지에 데이터를 저장하기 위해 사용되기 때문에 객체로 구성해서 저장합니다.  그리고 `paintToDo()`에서 사용자가 입력한 값을 화면에 출력합니다. 그리고 `toDos`라는 빈 배열에 `todoobj`를 추가하고, `save()`에서 사용자가 입력한 값을 localStorage에 저장합니다. 그리고 입력창에 입력한 뒤에 초기화 합니다.
+
+- 일단 `CreateToDo()`를 보면 인풋창에 내용을 작성하지 않은 경우 알림창이 나오게 했습니다. 그리고 내용을 작성했다면 아래코드가 진행됩니다. 입력값을 `newText`에 할당, `todoobj`는 `id`와 `text`라는 `key`를 가지는 객체입니다. 이 키와 값 구조는 로컬 스토리지에 데이터를 저장하기 위해 사용되기 때문에 객체로 구성해서 저장합니다. 그리고 `paintToDo()`에서 사용자가 입력한 값을 화면에 출력합니다. 그리고 `toDos`라는 빈 배열에 `todoobj`를 추가하고, `save()`에서 사용자가 입력한 값을 localStorage에 저장합니다. 그리고 입력창에 입력한 뒤에 초기화 합니다.
+
 ## 기능 구현 - 삭제 부분
+
 ```jsx
 function deleteTodo(event) {
   const re = event.target.parentElement;
@@ -344,8 +358,11 @@ function deleteTodo(event) {
   save();
 }
 ```
+
 - `paintToDo()`함수 안에 휴지통 이미지에 대한 `deleimg.addEventListener("click", deleteTodo)`를 생성, 휴지통을 클릭하면 `deleteTodo()`가 실행, 클릭된 요소의 부모 요소를 re 변수에 할당 `toDos`에 필터를 실행 `toDos` 배열에서 `re.id`와 일치하지 않는 요소들만을 선택하여 새로운 배열을 만들고 `toDos`에 할당합니다. 즉, `re.id`에 일치하는 아이디를 가진 항목은 제외되고 그 외의 항목들만 포함된 새로운 배열이 `toDos`에 할당됩니다. 그 후 re변수를 제거, 업데이트된 toDos를 localStorage에 저장합니다.
+
 ## 기능 구현 - 완료 표시 유무 부분
+
 ```jsx
 // todo 완료 표시 유무
 function CompleteTodoItem(e) {
@@ -364,8 +381,11 @@ function CompleteTodoItem(e) {
   }
 }
 ```
-- `paintToDo()`부분에 `div.addEventListener("click", CompleteTodoItem)`를 생성, 작성된 투두 리스트를 클릭하면 함수가 `CompleteTodoItem()`가 실행됩니다. 
+
+- `paintToDo()`부분에 `div.addEventListener("click", CompleteTodoItem)`를 생성, 작성된 투두 리스트를 클릭하면 함수가 `CompleteTodoItem()`가 실행됩니다.
+
 ## 기능 구현 - 완료 표시 유무 부분
+
 ```jsx
 // todolist를 수정하는 함수
 function editToDo(event) {
@@ -412,9 +432,12 @@ function editToDo(event) {
   }
 }
 ```
+
 - 진짜 투두리스트를 만들면서 가장 그리고 제일 힘들었던 부분입니다. 만들면서 구글링도 많이하고 chatgpt한테 힌트도 얻으면서 이 부분은 확실하게 이해가 안가서 계속 봐야할 부분인거같습니다. 이거 때문에 진짜 별 생각을 다했네요... 많이 우울했습니다.
 - 가능한 prompt는 사용하지 않고 만들고 싶었기에 마구 찾아봤습니다. `replaceChild`이 메소드는 처음본거 같아서 신기했습니다.
+
 ## 기능 구현 - 새로고침해도 다시 보이는 부분
+
 ```jsx
 function gettodo() {
   const loadedTodo = localStorage.getItem("todos");
@@ -435,11 +458,12 @@ function gettodo() {
 gettodo();
 // gettodo 함수를 호출하여 실행합니다.
 ```
+
 ## 처음 프로젝트를 진행하고 느낀점
-- 뭔가 클론코딩으로 진행했을 때는 코드 한줄한줄을 이해하고 백지 상태에서 작성도 해보고 했는데 똑같이 작성만! 할 줄 알았지 이걸 조금 다르게 해봐라 라고 한다면 너무 어려웠습니다. 문법만 공부하고 어떤 기능을 뚝딱 만들어봐라 하니까 너무 막연하더라구요. 
+
+- 뭔가 클론코딩으로 진행했을 때는 코드 한줄한줄을 이해하고 백지 상태에서 작성도 해보고 했는데 똑같이 작성만! 할 줄 알았지 이걸 조금 다르게 해봐라 라고 한다면 너무 어려웠습니다. 문법만 공부하고 어떤 기능을 뚝딱 만들어봐라 하니까 너무 막연하더라구요.
 - 뭔가 조급하고 불안하고 우울한 마음을 느꼈습니다. 근데 이런 기분을 가지고 있어봤자 동굴속 깊이 빠져서 우울감엔 살기 싫었습니다. 그래서 일단 끝까지 한번 가보자 느꼈습니다. 죽기살기로 한번 해보겠습니다.
 - "개발자는 계속 배워야 하는데 벌써 이런걸로 우울하면 개발자 하면 안된다 이런 일은 자주 일어날거다 그럴거면 관둬라" 이런걸 많이 봐서 그래도! 일단 해보고 결정하겠습니다. 열심히 준비해서 한번 결과로 보여드리겠습니다.
 - 아직도 많이 부족하지만 문법 공부도 하면서 뭔가를 만들어 보면서 공부를 해보겠습니다.
-## [To Do List](https://jinwoo5092.netlify.app) 입니다 혹시나 누군가 보신다면 따끔한 한 말씀이나 건강 잘 챙겨라 한마디 부탁드립니다! ㅋㅋ
 
-인생은 항상 행복만 있는건 아닌거 같습니다. 이런일로 쓰러지지않고 뿌리내려 더 단단한 나무가 되겠습니다. 뭔가 첫 프로젝트 마무리와 기분이 섞어 글이 이상해지고 있네요 암튼 감사합니다!
+## [To Do List](https://jinwoo5092.netlify.app) 입니다
