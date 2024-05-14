@@ -1,4 +1,4 @@
-![[첫 프로젝트.gif]]
+![첫 프로젝트.gif](https://velog.velcdn.com/images/jinwoo5092/post/7220b873-5df3-4465-b441-e02d003f8970/image.gif)
 
 # 목적
 
