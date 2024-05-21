@@ -1,5 +1,7 @@
 ![첫 프로젝트.gif](https://velog.velcdn.com/images/jinwoo5092/post/7220b873-5df3-4465-b441-e02d003f8970/image.gif)
 
+# [To Do List](https://jinwoo5092.netlify.app) 입니다.
+
 # 목적
 
 - 지금까지 배운 내용을 잊지 않기 위해, JavaScript를 이용하여 Todo-List를 만들어 보려고 합니다.
@@ -491,4 +493,4 @@ gettodo();
 - 반응형 배워서 한번 적용시켜봤습니다. 핸드폰으로 보면 사이즈 괜찮게 보입니다.
 - 꼼꼼하게 확인을 하고 커밋을 진행해야 하는데 꼭 커밋하면 수정할게 보이네요 앞으론 꼼꼼하게 확인하고 커밋 진행하겠습니다.
 
-# [To Do List](https://jinwoo5092.netlify.app) 입니다.
+---
