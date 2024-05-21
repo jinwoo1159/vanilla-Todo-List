@@ -16,7 +16,7 @@ body {
 .container {
   background-color: #fff;
   padding: 25px;
-  width: 500px;
+  width: 40%;
   border-radius: 10px;
 }
 
@@ -51,6 +51,7 @@ body {
   width: 55px;
   padding: 15px;
   background-color: limegreen;
+  margin-right: auto; /* 마진 추가 */
   border-radius: 40px;
 }
 
@@ -88,4 +89,16 @@ li div {
   padding: 10px;
   outline: none;
   font-size: 16px;
+}
+
+@media (max-width: 900px) {
+  .container {
+    width: 60%;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 550px) {
+  .container {
+    width: 80%;
+  }
 }

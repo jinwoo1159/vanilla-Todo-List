@@ -106,58 +106,6 @@ function CompleteTodoItem(e) {
   }
 }
 
-/** todo list를 수정하는 함수 */
-// function editToDo(event) {
-//   const li = event.target.parentElement;
-//   const div = li.querySelector("div");
-//   const input = document.createElement("input");
-//   input.value = div.textContent;
-
-//   input.addEventListener("keypress", (e) => {
-//     if (e.key === "Enter") {
-//       const newTodo = e.target.value;
-//       div.textContent = newTodo;
-//       toDos = toDos.map((todo) => {
-//         if (todo.id === parseInt(li.id)) {
-//           return { id: todo.id, text: newTodo };
-//         } else {
-//           return todo;
-//         }
-//       });
-//       save();
-//       li.replaceChild(div, input);
-//     }
-//   });
-
-//   li.replaceChild(input, div);
-// }
-
-// function editToDo(event) {
-//   const li = event.target.parentElement;
-//   const div = li.querySelector("div");
-//   const input = li.querySelector("input");
-
-//   if (div) {
-//     const newInput = document.createElement("input");
-//     newInput.type = "text";
-//     newInput.value = div.textContent;
-//     newInput.addEventListener("change", (e) => {
-//       const newTodo = e.target.value;
-//       div.textContent = newTodo;
-//       toDos = toDos.map((todo) =>
-//         todo.id === parseInt(li.id) ? { text: newTodo, id: todo.id } : todo
-//       );
-//       save();
-//     });
-//     li.replaceChild(newInput, div);
-//   } else if (input) {
-//     const newDiv = document.createElement("div");
-//     newDiv.textContent = input.value;
-//     newDiv.addEventListener("click", CompleteTodoItem);
-//     li.replaceChild(newDiv, input);
-//   }
-// }
-
 // todolist를 수정하는 함수
 function editToDo(event) {
   // 클릭한 요소의 부모 요소인 li를 찾습니다.
