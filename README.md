@@ -54,7 +54,7 @@ body {
 .container {
   background-color: #fff;
   padding: 25px;
-  width: 500px;
+  width: 35%;
   border-radius: 10px;
 }
 
@@ -72,6 +72,7 @@ body {
   border-radius: 30px;
   padding-left: 20px;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .todo_body input {
@@ -81,14 +82,16 @@ body {
   background-color: transparent;
   padding: 15px 0;
   font-size: 20px;
+  overflow: hidden;
 }
 
 .todo_body img {
   cursor: pointer;
-  height: 55px;
-  width: 55px;
+  height: 60px;
+  width: 60px;
   padding: 15px;
   background-color: limegreen;
+  margin-right: auto;
   border-radius: 40px;
 }
 
@@ -125,6 +128,23 @@ li div {
   border-radius: 5px;
   padding: 10px;
   outline: none;
+  font-size: 16px;
+}
+
+@media (max-width: 900px) {
+  .container {
+    width: 50%;
+  }
+}
+
+@media (min-width: 350px) and (max-width: 550px) {
+  .container {
+    width: 85%;
+  }
+  .todo_body img {
+    position: absolute;
+    right: -4px;
+  }
 }
 ```
 
@@ -255,9 +275,9 @@ function editToDo(event) {
     newInput.type = "text";
     // input 요소의 값을 div 요소의 텍스트로 설정합니다.
     newInput.value = div.textContent;
-    // input 요소에 'change' 이벤트 리스너를 추가합니다.
+    // input 요소에 change 이벤트 리스너를 추가합니다.
     newInput.addEventListener("change", (e) => {
-      // 'change' 이벤트 발생 시 (input 값이 변경될 때), 새로운 할 일 텍스트를 가져옵니다.
+      // change 이벤트 발생 시 (input 값이 변경될 때), 새로운 할 일 텍스트를 가져옵니다.
       const newTodo = e.target.value;
       // div 요소의 텍스트를 새로운 할 일 텍스트로 변경합니다.
       div.textContent = newTodo;
@@ -277,7 +297,7 @@ function editToDo(event) {
     const newDiv = document.createElement("div");
     // div 요소의 텍스트를 input 요소의 값으로 설정합니다.
     newDiv.textContent = input.value;
-    // div 요소에 'click' 이벤트 리스너를 추가합니다.
+    // div 요소에 click 이벤트 리스너를 추가합니다.
     newDiv.addEventListener("click", CompleteTodoItem);
     // li 요소에서 input 요소를 제거하고, 새로 생성한 div 요소로 대체합니다.
     li.replaceChild(newDiv, input);
@@ -301,7 +321,7 @@ function gettodo() {
 }
 
 gettodo();
-// 'gettodo' 함수를 호출하여 실행합니다.
+// gettodo 함수를 호출하여 실행합니다.
 ```
 
 ## 기능 구현 - 생성 부분
@@ -361,6 +381,58 @@ function deleteTodo(event) {
 
 - `paintToDo()`함수 안에 휴지통 이미지에 대한 `deleimg.addEventListener("click", deleteTodo)`를 생성, 휴지통을 클릭하면 `deleteTodo()`가 실행, 클릭된 요소의 부모 요소를 re 변수에 할당 `toDos`에 필터를 실행 `toDos` 배열에서 `re.id`와 일치하지 않는 요소들만을 선택하여 새로운 배열을 만들고 `toDos`에 할당합니다. 즉, `re.id`에 일치하는 아이디를 가진 항목은 제외되고 그 외의 항목들만 포함된 새로운 배열이 `toDos`에 할당됩니다. 그 후 re변수를 제거, 업데이트된 toDos를 localStorage에 저장합니다.
 
+## 기능 구현 - 수정하는 부분
+
+```jsx
+// todolist를 수정하는 함수
+function editToDo(event) {
+  // 클릭한 요소의 부모 요소인 li를 찾습니다.
+  const li = event.target.parentElement;
+  // li 요소 내의 div 요소를 찾습니다.
+  const div = li.querySelector("div");
+  // li 요소 내의 input 요소를 찾습니다.
+  const input = li.querySelector("input");
+  // div 요소가 있을 경우 (편집 모드가 아닐 경우)
+  if (div) {
+    // 새 input 요소를 생성합니다.
+    const newInput = document.createElement("input");
+    // input 요소의 타입을 "text"로 설정합니다.
+    newInput.type = "text";
+    // input 요소의 값을 div 요소의 텍스트로 설정합니다.
+    newInput.value = div.textContent;
+    // input 요소에 change 이벤트 리스너를 추가합니다.
+    newInput.addEventListener("change", (e) => {
+      // change 이벤트 발생 시 (input 값이 변경될 때), 새로운 할 일 텍스트를 가져옵니다.
+      const newTodo = e.target.value;
+      // div 요소의 텍스트를 새로운 할 일 텍스트로 변경합니다.
+      div.textContent = newTodo;
+      // toDos 배열에서 해당 할 일을 찾아 텍스트를 업데이트합니다.
+      toDos = toDos.map((todo) =>
+        todo.id === parseInt(li.id) ? { text: newTodo, id: todo.id } : todo
+      );
+      // 변경된 toDos 배열을 로컬 스토리지에 저장합니다.
+      save();
+    });
+    // li 요소에서 div 요소를 제거하고, 새로 생성한 input 요소로 대체합니다.
+    li.replaceChild(newInput, div);
+  }
+  // input 요소가 있을 경우 (편집 모드일 경우)
+  else if (input) {
+    // 새 div 요소를 생성합니다.
+    const newDiv = document.createElement("div");
+    // div 요소의 텍스트를 input 요소의 값으로 설정합니다.
+    newDiv.textContent = input.value;
+    // div 요소에 click 이벤트 리스너를 추가합니다.
+    newDiv.addEventListener("click", CompleteTodoItem);
+    // li 요소에서 input 요소를 제거하고, 새로 생성한 div 요소로 대체합니다.
+    li.replaceChild(newDiv, input);
+  }
+}
+```
+
+- 진짜 투두리스트를 만들면서 가장 그리고 제일 힘들었던 부분입니다. 만들면서 구글링도 많이하고 chatgpt한테 힌트도 얻으면서 이 부분은 확실하게 이해가 안가서 계속 봐야할 부분인거같습니다. 이거 때문에 진짜 별 생각을 다했네요... 많이 우울했습니다.
+- 가능한 prompt는 사용하지 않고 만들고 싶었기에 마구 찾아봤습니다. `replaceChild`이 메소드는 처음본거 같아서 신기했습니다.
+
 ## 기능 구현 - 완료 표시 유무 부분
 
 ```jsx
@@ -383,58 +455,6 @@ function CompleteTodoItem(e) {
 ```
 
 - `paintToDo()`부분에 `div.addEventListener("click", CompleteTodoItem)`를 생성, 작성된 투두 리스트를 클릭하면 함수가 `CompleteTodoItem()`가 실행됩니다.
-
-## 기능 구현 - 완료 표시 유무 부분
-
-```jsx
-// todolist를 수정하는 함수
-function editToDo(event) {
-  // 클릭한 요소의 부모 요소인 li를 찾습니다.
-  const li = event.target.parentElement;
-  // li 요소 내의 div 요소를 찾습니다.
-  const div = li.querySelector("div");
-  // li 요소 내의 input 요소를 찾습니다.
-  const input = li.querySelector("input");
-  // div 요소가 있을 경우 (편집 모드가 아닐 경우)
-  if (div) {
-    // 새 input 요소를 생성합니다.
-    const newInput = document.createElement("input");
-    // input 요소의 타입을 "text"로 설정합니다.
-    newInput.type = "text";
-    // input 요소의 값을 div 요소의 텍스트로 설정합니다.
-    newInput.value = div.textContent;
-    // input 요소에 'change' 이벤트 리스너를 추가합니다.
-    newInput.addEventListener("change", (e) => {
-      // 'change' 이벤트 발생 시 (input 값이 변경될 때), 새로운 할 일 텍스트를 가져옵니다.
-      const newTodo = e.target.value;
-      // div 요소의 텍스트를 새로운 할 일 텍스트로 변경합니다.
-      div.textContent = newTodo;
-      // toDos 배열에서 해당 할 일을 찾아 텍스트를 업데이트합니다.
-      toDos = toDos.map((todo) =>
-        todo.id === parseInt(li.id) ? { text: newTodo, id: todo.id } : todo
-      );
-      // 변경된 toDos 배열을 로컬 스토리지에 저장합니다.
-      save();
-    });
-    // li 요소에서 div 요소를 제거하고, 새로 생성한 input 요소로 대체합니다.
-    li.replaceChild(newInput, div);
-  }
-  // input 요소가 있을 경우 (편집 모드일 경우)
-  else if (input) {
-    // 새 div 요소를 생성합니다.
-    const newDiv = document.createElement("div");
-    // div 요소의 텍스트를 input 요소의 값으로 설정합니다.
-    newDiv.textContent = input.value;
-    // div 요소에 'click' 이벤트 리스너를 추가합니다.
-    newDiv.addEventListener("click", CompleteTodoItem);
-    // li 요소에서 input 요소를 제거하고, 새로 생성한 div 요소로 대체합니다.
-    li.replaceChild(newDiv, input);
-  }
-}
-```
-
-- 진짜 투두리스트를 만들면서 가장 그리고 제일 힘들었던 부분입니다. 만들면서 구글링도 많이하고 chatgpt한테 힌트도 얻으면서 이 부분은 확실하게 이해가 안가서 계속 봐야할 부분인거같습니다. 이거 때문에 진짜 별 생각을 다했네요... 많이 우울했습니다.
-- 가능한 prompt는 사용하지 않고 만들고 싶었기에 마구 찾아봤습니다. `replaceChild`이 메소드는 처음본거 같아서 신기했습니다.
 
 ## 기능 구현 - 새로고침해도 다시 보이는 부분
 
@@ -471,4 +491,4 @@ gettodo();
 - 반응형 배워서 한번 적용시켜봤습니다. 핸드폰으로 보면 사이즈 괜찮게 보입니다.
 - 꼼꼼하게 확인을 하고 커밋을 진행해야 하는데 꼭 커밋하면 수정할게 보이네요 앞으론 꼼꼼하게 확인하고 커밋 진행하겠습니다.
 
-## [To Do List](https://jinwoo5092.netlify.app) 입니다
+# [To Do List](https://jinwoo5092.netlify.app) 입니다.
