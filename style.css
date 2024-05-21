@@ -34,6 +34,7 @@ body {
   border-radius: 30px;
   padding-left: 20px;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .todo_body input {
@@ -93,12 +94,16 @@ li div {
 
 @media (max-width: 900px) {
   .container {
-    width: 60%;
+    width: 50%;
   }
 }
 
-@media (min-width: 400px) and (max-width: 550px) {
+@media (min-width: 350px) and (max-width: 550px) {
   .container {
-    width: 80%;
+    width: 85%;
+  }
+  .todo_body img {
+    position: absolute;
+    right: 1px;
   }
 }
