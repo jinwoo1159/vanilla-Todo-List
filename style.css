@@ -44,12 +44,13 @@ body {
   background-color: transparent;
   padding: 15px 0;
   font-size: 20px;
+  /* overflow: hidden; */
 }
 
 .todo_body img {
   cursor: pointer;
-  height: 55px;
-  width: 55px;
+  height: 60px;
+  width: 60px;
   padding: 15px;
   background-color: limegreen;
   margin-right: auto; /* 마진 추가 */
@@ -104,6 +105,6 @@ li div {
   }
   .todo_body img {
     position: absolute;
-    right: 1px;
+    right: -3px;
   }
 }
